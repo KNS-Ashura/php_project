@@ -1,0 +1,38 @@
+services:
+  web2:  # au lieu de web
+    build: .
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - "3001:80"  # si tu veux le lancer en parallèle du premier
+    depends_on:
+      - db2
+    restart: always
+
+  db2:
+    image: mysql:5.7
+    volumes:
+      - db_data2:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: monsite2
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "1101:3306"  # éviter les conflits
+    restart: always
+
+  phpmyadmin2:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: db2
+      PMA_USER: root
+      PMA_PASSWORD: root
+    ports:
+      - "6970:80"
+    depends_on:
+      - db2
+    restart: always
+
+volumes:
+  db_data2:
