@@ -4,18 +4,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Sup Movie Base</title>
-    <link rel="stylesheet" href="\style\header_style.css">
-    <link rel="stylesheet" href="\style\main_style.css">
+    <title>Exemple Header et Footer</title>
+    <link rel="stylesheet" href="style\main_style.css">
 </head>
 
 <body>
+
     <header>
-        <h1>The Sup Movie Base</h1>
+        <h1>Bienvenue sur notre site</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
     </header>
-    <div>
-        <h2>Bienvenu !</h2>
-    </div>
+
+    <main>
+        <div id="carrousel">
+            <a href="vid.php">
+                <img src="assets\téléchargé.jpg" alt="fff">
+                chemin vers coucou
+            </a>
+        </div>
+    </main>
+
+    <footer>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a justo id ipsum vulputate venenatis.</p>
+    </footer>
 
 </body>
 
