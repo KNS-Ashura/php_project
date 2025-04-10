@@ -1,17 +1,14 @@
-<?php
-session_start();
-?>
-
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exemple Header et Footer</title>
-    <link rel="stylesheet" href="style\main_style.css">
-    <link rel="stylesheet" href="style\header_style.css">
-    <link rel="stylesheet" href="style\footer_style.css">
+    <link rel="stylesheet" href="../style/main_style.css">
+    <link rel="stylesheet" href="../style/footer_style.css">
+    <link rel="stylesheet" href="../style/header_style.css">
+    <link rel="stylesheet" href="../style/form_style.css">
+    <title>Subscribe</title>
 </head>
 
 <body>
@@ -37,20 +34,26 @@ session_start();
         </div>
     </header>
 
-    <?php
-        $password = "monmotdepasse123";
-        $hash = password_hash($password, PASSWORD_DEFAULT);
-        echo $hash;
-    ?>
-
     <main>
-        <div id="carrousel">
-            <a href="vid.php">
-                <img src="assets\téléchargé.jpg" alt="fff">
-                chemin vers coucou
-            </a>
+        <div class="form-container">
+            <h2>Créer un nouvel utilisateur</h2>
+            <form action="create_user.php" method="POST">
+                <label for="username">Nom d'utilisateur :</label>
+                <input type="text" id="username" name="username" required>
+
+                <label for="email">Email :</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="password">Mot de passe :</label>
+                <input type="password" id="password" name="password" required>
+
+                <button type="submit">Créer un compte</button>
+            </form>
         </div>
     </main>
+
+
+
 
     <footer>
         <div class="footer-contact">
@@ -74,6 +77,8 @@ session_start();
             <p>&copy; 2025 MonSiteFictif. Tous droits réservés.</p>
         </div>
     </footer>
+
+
 
 </body>
 
