@@ -1,3 +1,31 @@
+<?php
+include('db.php');
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+
+    $password_hash = password_hash($password, PASSWORD_DEFAULT);
+
+    try {
+        $sql = "INSERT INTO users (username, email, password_hash) VALUES (:username, :email, :password_hash)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':password_hash', $password_hash);
+
+        $stmt->execute();
+
+        header('Location: login.php');
+        exit();
+    } catch (PDOException $e) {
+        echo "<p>Erreur lors de la création du compte : " . $e->getMessage() . "</p>";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,7 +65,7 @@
     <main>
         <div class="form-container">
             <h2>Créer un nouvel utilisateur</h2>
-            <form action="create_user.php" method="POST">
+            <form action="subscribe.php" method="POST">
                 <label for="username">Nom d'utilisateur :</label>
                 <input type="text" id="username" name="username" required>
 
@@ -51,9 +79,6 @@
             </form>
         </div>
     </main>
-
-
-
 
     <footer>
         <div class="footer-contact">
@@ -77,8 +102,6 @@
             <p>&copy; 2025 MonSiteFictif. Tous droits réservés.</p>
         </div>
     </footer>
-
-
 
 </body>
 
