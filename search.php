@@ -80,7 +80,7 @@ if (isset($_GET['q'])) {
         <?php if ($results && count($results) > 0): ?>
         <div class="results-container">
             <?php foreach ($results as $video): ?>
-            <div class="video-result">
+                <a href="vid.php?id=<?= urlencode($video['id']) ?>" class="video-result">
                 <h2><?= htmlspecialchars($video['title']) ?></h2>
                 <p><?= htmlspecialchars($video['description']) ?></p>
                 <?php if (!empty($video['image_url'])): ?>
@@ -89,7 +89,7 @@ if (isset($_GET['q'])) {
                 <p>Aucune image disponible.</p>
                 <?php endif; ?>
                 <p>Prix : <?= htmlspecialchars($video['price']) ?> €</p>
-            </div>
+                </a>
             <?php endforeach; ?>
         </div>
         <?php else: ?>

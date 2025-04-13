@@ -36,6 +36,11 @@ h1 {
     transition: transform 0.2s ease;
 }
 
+a.video-result {
+    text-decoration: none;
+    color: inherit;
+}
+
 .video-result:hover {
     transform: translateY(-5px);
 }

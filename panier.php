@@ -1,10 +1,26 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+require_once 'usergestion/db.php';
 
 if (!isset($_SESSION['user_id'])) {
-    header('Location: usergestion/subscribe.php');
-    exit();
+    echo "<p>Vous devez être connecté pour voir votre panier.</p>";
+    exit;
 }
+
+$user_id = $_SESSION['user_id'];
+
+// Requête PDO
+$sql = "SELECT v.title, v.description, v.price, v.image_url
+        FROM cart_items ci
+        JOIN videos v ON ci.video_id = v.id
+        WHERE ci.user_id = :user_id";
+
+$stmt = $conn->prepare($sql);
+$stmt->execute(['user_id' => $user_id]);
+$videos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -25,7 +41,7 @@ if (!isset($_SESSION['user_id'])) {
 
         <?php if (isset($_SESSION['username'])): ?>
         <div class="welcome-message">
-            Bienvenue, <?= htmlspecialchars($_SESSION['username']); ?> !
+            <?= htmlspecialchars($_SESSION['username']); ?> ! voici votre panier.
         </div>
         <?php endif; ?>
 
@@ -44,7 +60,27 @@ if (!isset($_SESSION['user_id'])) {
     </header>
 
     <main>
-
+        <section class="cart-videos">
+            <h1>🛒 Mon Panier</h1>
+            <div class="results-container">
+                <?php if (count($videos) > 0): ?>
+                <?php foreach ($videos as $video): ?>
+                <div class="video-result">
+                    <h2><?= htmlspecialchars($video['title']) ?></h2>
+                    <p><?= htmlspecialchars($video['description']) ?></p>
+                    <?php if (!empty($video['image_url'])): ?>
+                    <img src="<?= htmlspecialchars($video['image_url']) ?>" alt="Affiche du film">
+                    <?php else: ?>
+                    <p>Aucune image disponible.</p>
+                    <?php endif; ?>
+                    <p>Prix : <?= htmlspecialchars($video['price']) ?> €</p>
+                </div>
+                <?php endforeach; ?>
+                <?php else: ?>
+                <p>Votre panier est vide.</p>
+                <?php endif; ?>
+            </div>
+        </section>
     </main>
 
     <footer>

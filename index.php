@@ -69,7 +69,7 @@ $recent_videos = $stmt->fetchAll();
             <h1>🎬 Films Tendance</h1>
             <div class="results-container">
                 <?php foreach ($recent_videos as $video): ?>
-                <div class="video-result">
+                <a href="vid.php?id=<?= urlencode($video['id']) ?>" class="video-result">
                     <h2><?= htmlspecialchars($video['title']) ?></h2>
                     <p><?= htmlspecialchars($video['description']) ?></p>
                     <?php if (!empty($video['image_url'])): ?>
@@ -78,7 +78,7 @@ $recent_videos = $stmt->fetchAll();
                     <p>Aucune image disponible.</p>
                     <?php endif; ?>
                     <p>Prix : <?= htmlspecialchars($video['price']) ?> €</p>
-                </div>
+                </a>
                 <?php endforeach; ?>
             </div>
         </section>
