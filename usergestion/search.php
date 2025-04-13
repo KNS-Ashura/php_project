@@ -54,9 +54,14 @@ if (isset($_GET['q'])) {
         <nav>
             <a href="usergestion/subscribe.php">Subscribe</a>
             <a href="usergestion/login.php">Login</a>
+            <?php if (isset($_SESSION['user_id'])): ?>
             <a href="panier.php">Panier</a>
-            <a href="subscribe.php">S'inscrire</a>
+            <?php else: ?>
+            <a href="usergestion/subscribe.php"
+                onclick="alert('Veuillez vous inscrire ou vous connecter pour accéder au panier.');">Panier</a>
+            <?php endif; ?>
             <a href="../index.php">Accueil</a>
+            <a href="usergestion/logout.php">Deconnexion</a>
         </nav>
 
         <div class="search-bar">

@@ -12,8 +12,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($user && password_verify($password_input, $user['password_hash'])) {
+        $_SESSION['user_id'] = $user['id'];
         $_SESSION['username'] = $user['username'];
-        $_SESSION['username'] = $user['username'];
+
         header("Location: ../index.php");
         exit();
     } else {
@@ -28,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../style/main_style_2.css">
+    <link rel="stylesheet" href="../style/userpage_main_style.css">
     <link rel="stylesheet" href="../style/footer_style.css">
     <link rel="stylesheet" href="../style/header_style.css">
     <link rel="stylesheet" href="../style/form_style.css">
@@ -44,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="logo">MonSiteFictif</div>
 
             <nav>
-                <a href="subscribe.php">S'inscrire</a>
+                <a href="subscribe.php">S'inscrire</a>|
                 <a href="../index.php">Accueil</a>
             </nav>
         </header>

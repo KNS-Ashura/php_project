@@ -11,7 +11,6 @@ try {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
 
-// Récupérer les 10 derniers films
 $sql = "SELECT * FROM videos ORDER BY id DESC LIMIT 10";
 $stmt = $pdo->query($sql);
 $recent_videos = $stmt->fetchAll();
@@ -41,9 +40,18 @@ $recent_videos = $stmt->fetchAll();
         <?php endif; ?>
 
         <nav>
-            <a href="usergestion/subscribe.php">Subscribe</a>
-            <a href="usergestion/login.php">Login</a>
+            <a href="usergestion/subscribe.php">Subscribe</a> |
+            <a href="usergestion/login.php">Login</a> |
+
+            <?php if (isset($_SESSION['user_id'])): ?>
             <a href="panier.php">Panier</a>
+            <?php else: ?>
+            <a href="usergestion/subscribe.php"
+                onclick="alert('Veuillez vous inscrire ou vous connecter pour accéder au panier.');">Panier</a>
+            <?php endif; ?>
+
+            | <a href="usergestion/logout.php">Déconnexion</a>
+            
         </nav>
 
         <div class="search-bar">
@@ -53,6 +61,7 @@ $recent_videos = $stmt->fetchAll();
             </form>
         </div>
     </header>
+
 
     <main>
 

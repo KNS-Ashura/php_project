@@ -1,23 +1,17 @@
 <?php
 include('db.php');
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $email = $_POST['email'];
     $password = $_POST['password'];
-
-
     $password_hash = password_hash($password, PASSWORD_DEFAULT);
-
     try {
         $sql = "INSERT INTO users (username, email, password_hash) VALUES (:username, :email, :password_hash)";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':username', $username);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':password_hash', $password_hash);
-
         $stmt->execute();
-
         header('Location: login.php');
         exit();
     } catch (PDOException $e) {
@@ -32,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../style/main_style_2.css">
+    <link rel="stylesheet" href="../style/userpage_main_style.css">
     <link rel="stylesheet" href="../style/footer_style.css">
     <link rel="stylesheet" href="../style/header_style.css">
     <link rel="stylesheet" href="../style/form_style.css">
@@ -45,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="logo">The Sup Movie Base</div>
 
         <nav>
-            <a href="login.php">Login</a>
+            <a href="login.php">Login</a>|
             <a href="../index.php">Accueil</a>
         </nav>
     </header>
