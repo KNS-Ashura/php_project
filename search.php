@@ -66,6 +66,7 @@ if (isset($_GET['q'])) {
             </form>
         </div>
     </header>
+    
 
     <main>
         <?php if (!empty($escapedQuery)): ?>
