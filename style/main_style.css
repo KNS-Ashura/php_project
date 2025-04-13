@@ -5,12 +5,56 @@ body {
 }
 
 main {
-    display: flex;
-    justify-content: center;
+    padding: 2rem;
+    background-color: #f4f4f4;
+    color: #333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-main div a{
+h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.results-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.video-result {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    padding: 1rem;
+    width: 280px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     display: flex;
     flex-direction: column;
     align-items: center;
+    transition: transform 0.2s ease;
 }
+
+.video-result:hover {
+    transform: translateY(-5px);
+}
+
+.video-result img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.video-result h2 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.video-result p {
+    margin: 0.3rem 0;
+    text-align: center;
+}
+

@@ -32,34 +32,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../style/main_style.css">
+    <link rel="stylesheet" href="../style/main_style_2.css">
     <link rel="stylesheet" href="../style/footer_style.css">
     <link rel="stylesheet" href="../style/header_style.css">
     <link rel="stylesheet" href="../style/form_style.css">
-    <title>Subscribe</title>
+    <title>Inscription</title>
 </head>
 
 <body>
 
     <header>
-        <div class="logo">MonSiteFictif</div>
+        <div class="logo">The Sup Movie Base</div>
 
-        <?php if (isset($_SESSION['username'])): ?>
-        <div class="welcome-message">
-            Bienvenue, <?= htmlspecialchars($_SESSION['username']); ?> !
-        </div>
-        <?php endif; ?>
-
-        <!-- liste des liens -->
         <nav>
-            <a href="usergestion\subscribe.php">Subscribe</a>
-            <a href="usergestion\login.php">Login</a>
+            <a href="login.php">Login</a>
+            <a href="../index.php">Accueil</a>
         </nav>
-
-        <div class="search-bar">
-            <input type="text" placeholder="Rechercher...">
-            <button>🔍</button>
-        </div>
     </header>
 
     <main>
@@ -99,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <div class="footer-bottom">
-            <p>&copy; 2025 MonSiteFictif. Tous droits réservés.</p>
+            <p>&copy; 2025 The Sup Movie Base. Tous droits réservés.</p>
         </div>
     </footer>
 

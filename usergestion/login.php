@@ -1,14 +1,38 @@
+<?php
+session_start();
+require "db.php";
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = trim($_POST['username']);
+    $password_input = $_POST['password'];
+
+    $stmt = $conn->prepare("SELECT * FROM users WHERE username = :username");
+    $stmt->bindParam(':username', $username);
+    $stmt->execute();
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($user && password_verify($password_input, $user['password_hash'])) {
+        $_SESSION['username'] = $user['username'];
+        $_SESSION['username'] = $user['username'];
+        header("Location: ../index.php");
+        exit();
+    } else {
+        $error = "Nom d'utilisateur ou mot de passe incorrect.";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../style/main_style.css">
+    <link rel="stylesheet" href="../style/main_style_2.css">
     <link rel="stylesheet" href="../style/footer_style.css">
     <link rel="stylesheet" href="../style/header_style.css">
     <link rel="stylesheet" href="../style/form_style.css">
-    <title>Login</title>
+    <title>Connexion</title>
 </head>
 
 <body> 
@@ -19,28 +43,16 @@
     <header>
         <div class="logo">MonSiteFictif</div>
 
-        <?php if (isset($_SESSION['username'])): ?>
-        <div class="welcome-message">
-            Bienvenue, <?= htmlspecialchars($_SESSION['username']); ?> !
-        </div>
-        <?php endif; ?>
-
-        <!-- liste des liens -->
         <nav>
-            <a href="usergestion\subscribe.php">S'inscrire</a>
-            <a href="usergestion\login.php">Se connecter</a>
+            <a href="subscribe.php">S'inscrire</a>
+            <a href="../index.php">Accueil</a>
         </nav>
-
-        <div class="search-bar">
-            <input type="text" placeholder="Rechercher...">
-            <button>🔍</button>
-        </div>
     </header>
 
     <main>
         <div class="form-container">
             <h2>Se connecter</h2>
-            <form action="login_user.php" method="POST">
+            <form action="login.php" method="POST">
                 <label for="username">Nom d'utilisateur :</label>
                 <input type="text" id="username" name="username" required>
 
@@ -71,7 +83,7 @@
         </div>
 
         <div class="footer-bottom">
-            <p>&copy; 2025 MonSiteFictif. Tous droits réservés.</p>
+            <p>&copy; 2025 The Sup Movie Base. Tous droits réservés.</p>
         </div>
     </footer>
 

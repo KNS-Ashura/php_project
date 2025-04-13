@@ -11,39 +11,52 @@ try {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
 
-// Récupérer les 10 derniers films
-$sql = "SELECT * FROM videos ORDER BY id DESC LIMIT 10";
-$stmt = $pdo->query($sql);
-$recent_videos = $stmt->fetchAll();
-?>
+$results = [];
+$escapedQuery = '';
 
+if (isset($_GET['q'])) {
+    $query = trim($_GET['q']);
+    $escapedQuery = htmlspecialchars($query);
+
+    $sql = "SELECT * FROM videos WHERE title LIKE :query";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(['query' => '%' . $query . '%']);
+    $results = $stmt->fetchAll();
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TSMB</title>
+    <title>Recherche</title>
     <link rel="stylesheet" href="style/main_style.css">
     <link rel="stylesheet" href="style/header_style.css">
     <link rel="stylesheet" href="style/footer_style.css">
 </head>
 
 <body>
-
     <header>
         <div class="logo">The Sup Movie Base</div>
 
         <?php if (isset($_SESSION['username'])): ?>
         <div class="welcome-message">
-            Bienvenue, <?= htmlspecialchars($_SESSION['username']); ?> !
+            <?= htmlspecialchars($_SESSION['username']); ?> ! Voici le résultat de votre recherche.
+        </div>
+        <?php else: ?>
+        <div class="welcome-message">
+            Voici le résultat de votre recherche.
         </div>
         <?php endif; ?>
+
 
         <nav>
             <a href="usergestion/subscribe.php">Subscribe</a>
             <a href="usergestion/login.php">Login</a>
             <a href="panier.php">Panier</a>
+            <a href="subscribe.php">S'inscrire</a>
+            <a href="../index.php">Accueil</a>
         </nav>
 
         <div class="search-bar">
@@ -55,24 +68,30 @@ $recent_videos = $stmt->fetchAll();
     </header>
 
     <main>
+        <?php if (!empty($escapedQuery)): ?>
+        <h1>Résultats de la recherche pour : "<?= $escapedQuery ?>"</h1>
 
-        <section class="recent-videos">
-            <h1>🎬 Films Tendance</h1>
-            <div class="results-container">
-                <?php foreach ($recent_videos as $video): ?>
-                <div class="video-result">
-                    <h2><?= htmlspecialchars($video['title']) ?></h2>
-                    <p><?= htmlspecialchars($video['description']) ?></p>
-                    <?php if (!empty($video['image_url'])): ?>
-                    <img src="<?= htmlspecialchars($video['image_url']) ?>" alt="Affiche du film">
-                    <?php else: ?>
-                    <p>Aucune image disponible.</p>
-                    <?php endif; ?>
-                    <p>Prix : <?= htmlspecialchars($video['price']) ?> €</p>
-                </div>
-                <?php endforeach; ?>
+        <?php if ($results && count($results) > 0): ?>
+        <div class="results-container">
+            <?php foreach ($results as $video): ?>
+            <div class="video-result">
+                <h2><?= htmlspecialchars($video['title']) ?></h2>
+                <p><?= htmlspecialchars($video['description']) ?></p>
+                <?php if (!empty($video['image_url'])): ?>
+                <img src="<?= htmlspecialchars($video['image_url']) ?>" alt="Affiche du film">
+                <?php else: ?>
+                <p>Aucune image disponible.</p>
+                <?php endif; ?>
+                <p>Prix : <?= htmlspecialchars($video['price']) ?> €</p>
             </div>
-        </section>
+            <?php endforeach; ?>
+        </div>
+        <?php else: ?>
+        <p>Aucun film trouvé pour "<?= $escapedQuery ?>".</p>
+        <?php endif; ?>
+        <?php else: ?>
+        <p>Aucune recherche effectuée.</p>
+        <?php endif; ?>
     </main>
 
     <footer>
