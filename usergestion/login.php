@@ -35,59 +35,59 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Connexion</title>
 </head>
 
-<body> 
-
-
 <body>
 
-    <header>
-        <div class="logo">MonSiteFictif</div>
 
-        <nav>
-            <a href="subscribe.php">S'inscrire</a>
-            <a href="../index.php">Accueil</a>
-        </nav>
-    </header>
+    <body>
 
-    <main>
-        <div class="form-container">
-            <h2>Se connecter</h2>
-            <form action="login.php" method="POST">
-                <label for="username">Nom d'utilisateur :</label>
-                <input type="text" id="username" name="username" required>
+        <header>
+            <div class="logo">MonSiteFictif</div>
 
-                <label for="password">Mot de passe :</label>
-                <input type="password" id="password" name="password" required>
+            <nav>
+                <a href="subscribe.php">S'inscrire</a>
+                <a href="../index.php">Accueil</a>
+            </nav>
+        </header>
 
-                <button type="submit">Se connecter</button>
-            </form>
-        </div>
-    </main>
+        <main>
+            <div class="form-container">
+                <h2>Se connecter</h2>
+                <form action="login.php" method="POST">
+                    <label for="username">Nom d'utilisateur :</label>
+                    <input type="text" id="username" name="username" required>
 
-    <footer>
-        <div class="footer-contact">
-            <h3>Contact</h3>
-            <p>Téléphone : +33 1 23 45 67 89</p>
-            <p>Email : contact@exemple.com</p>
-            <p>Adresse : 123 Rue Imaginaire, 75000 Paris, France</p>
-        </div>
+                    <label for="password">Mot de passe :</label>
+                    <input type="password" id="password" name="password" required>
 
-        <div class="footer-social">
-            <h3>Suivez-nous</h3>
-            <p>
-                <a href="#">YouTube</a> |
-                <a href="#">Instagram</a> |
-                <a href="#">Facebook</a> |
-                <a href="#">Twitter</a>
-            </p>
-        </div>
+                    <button type="submit">Se connecter</button>
+                </form>
+            </div>
+        </main>
 
-        <div class="footer-bottom">
-            <p>&copy; 2025 The Sup Movie Base. Tous droits réservés.</p>
-        </div>
-    </footer>
+        <footer>
+            <div class="footer-contact">
+                <h3>Contact</h3>
+                <p>Téléphone : +33 1 23 45 67 89</p>
+                <p>Email : contact@exemple.com</p>
+                <p>Adresse : 123 Rue Imaginaire, 75000 Paris, France</p>
+            </div>
 
-</body>
+            <div class="footer-social">
+                <h3>Suivez-nous</h3>
+                <p>
+                    <a href="#">YouTube</a> |
+                    <a href="#">Instagram</a> |
+                    <a href="#">Facebook</a> |
+                    <a href="#">Twitter</a>
+                </p>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 The Sup Movie Base. Tous droits réservés.</p>
+            </div>
+        </footer>
+
+    </body>
 
 </body>
 

@@ -66,7 +66,7 @@ if (isset($_GET['q'])) {
             </form>
         </div>
     </header>
-    
+
 
     <main>
         <?php if (!empty($escapedQuery)): ?>
@@ -102,6 +102,7 @@ if (isset($_GET['q'])) {
             <p>Email : contact@exemple.com</p>
             <p>Adresse : 123 Rue Imaginaire, 75000 Paris, France</p>
         </div>
+
 
         <div class="footer-social">
             <h3>Suivez-nous</h3>

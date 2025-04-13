@@ -4,3 +4,4 @@ $dbname = 'monsite2';
 $user = 'user';  
 $password = 'password';
 ?>
+

@@ -97,7 +97,7 @@ $recent_videos = $stmt->fetchAll();
             <p>&copy; 2025 The Sup Movie Base. Tous droits réservés.</p>
         </div>
     </footer>
-    
+
 
 </body>
 
