@@ -68,7 +68,7 @@ $videos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <?php $total = 0; ?>
                 <?php foreach ($videos as $video): ?>
                 <?php $total += $video['price']; ?>
-                <div class="video-result">
+                <a href="vid.php?id=<?= urlencode($video['id']) ?>" class="video-result">
                     <h2><?= htmlspecialchars($video['title']) ?></h2>
                     <p><?= htmlspecialchars($video['description']) ?></p>
                     <?php if (!empty($video['image_url'])): ?>
@@ -82,7 +82,7 @@ $videos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <input type="hidden" name="video_id" value="<?= $video['id'] ?>">
                         <button type="submit">Retirer du panier</button>
                     </form>
-                </div>
+                    </a>
                 <?php endforeach; ?>
                 <div class="cart-total">
                     <h3>Total : <?= number_format($total, 2, ',', ' ') ?> €</h3>

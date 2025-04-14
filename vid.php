@@ -81,6 +81,9 @@ if (!$video) {
     <main>
         <h1><?= htmlspecialchars($video['title'])?></h1>
         <img src="<?= htmlspecialchars($video['image_url']) ?>" alt="Affiche du film" style="max-width: 300px;">
+        <video width="640" height="360" controls>
+            <source src="<?= htmlspecialchars($video['trailer_url']) ?>" type="video/mp4">
+        </video>
         <p><strong>Description :</strong> <?= nl2br(htmlspecialchars($video['description'])) ?></p>
         <p><strong>Prix :</strong> <?= htmlspecialchars($video['price']) ?> €</p>
         <p><strong>Catégorie :</strong> <?= htmlspecialchars($video['category']) ?></p>
