@@ -78,9 +78,9 @@ $videos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <?php endif; ?>
                     <p>Prix : <?= htmlspecialchars($video['price']) ?> €</p>
 
-                    <form action="ajouter_au_panier.php" method="post">
-                        <input type="hidden" name="video_id" value="<?= $video_id ?>">
-                        <button type="submit" class="add-to-cart-btn">Ajouter au panier</button>
+                    <form action="retirer_du_panier.php" method="POST">
+                        <input type="hidden" name="video_id" value="<?= $video['id'] ?>">
+                        <button type="submit" class="delete-from-cart-btn">Retirer du panier</button>
                     </form>
                 </a>
                 <?php endforeach; ?>

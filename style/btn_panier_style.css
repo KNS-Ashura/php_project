@@ -1,4 +1,4 @@
-.add-to-cart-btn {
+.delete-from-cart-btn {
     background-color: #f0f0f0;
     color: #333;
     border: 1px solid #ccc;
@@ -9,7 +9,7 @@
     transition: background-color 0.3s, border-color 0.3s; 
 }
 
-.add-to-cart-btn:hover {
+.delete-from-cart-btn:hover {
     background-color: #e0e0e0;
     border-color: #bbb;
 }
