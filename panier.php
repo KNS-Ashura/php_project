@@ -12,8 +12,8 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// Requête PDO
-$sql = "SELECT v.title, v.description, v.price, v.image_url
+
+$sql = "SELECT v.id, v.title, v.description, v.price, v.image_url
         FROM cart_items ci
         JOIN videos v ON ci.video_id = v.id
         WHERE ci.user_id = :user_id";
@@ -62,9 +62,12 @@ $videos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <main>
         <section class="cart-videos">
             <h1>🛒 Mon Panier</h1>
+            <h2>Voici vos articles :</h2>
             <div class="results-container">
                 <?php if (count($videos) > 0): ?>
+                <?php $total = 0; ?>
                 <?php foreach ($videos as $video): ?>
+                <?php $total += $video['price']; ?>
                 <div class="video-result">
                     <h2><?= htmlspecialchars($video['title']) ?></h2>
                     <p><?= htmlspecialchars($video['description']) ?></p>
@@ -74,8 +77,16 @@ $videos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <p>Aucune image disponible.</p>
                     <?php endif; ?>
                     <p>Prix : <?= htmlspecialchars($video['price']) ?> €</p>
+
+                    <form action="retirer_du_panier.php" method="POST">
+                        <input type="hidden" name="video_id" value="<?= $video['id'] ?>">
+                        <button type="submit">Retirer du panier</button>
+                    </form>
                 </div>
                 <?php endforeach; ?>
+                <div class="cart-total">
+                    <h3>Total : <?= number_format($total, 2, ',', ' ') ?> €</h3>
+                </div>
                 <?php else: ?>
                 <p>Votre panier est vide.</p>
                 <?php endif; ?>

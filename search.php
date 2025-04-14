@@ -1,29 +1,46 @@
 <?php
 session_start();
 require './usergestion/env.php';
-
-$charset = 'latin1';
-
-try {
-    $dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
-    $pdo = new PDO($dsn, $user, $password);
-} catch (PDOException $e) {
-    die("Erreur de connexion à la base de données : " . $e->getMessage());
-}
+require './usergestion/db.php';
 
 $results = [];
-$escapedQuery = '';
+$searchType = '';
+$searchValue = '';
 
-if (isset($_GET['q'])) {
-    $query = trim($_GET['q']);
-    $escapedQuery = htmlspecialchars($query);
-
+if (isset($_GET['q']) && trim($_GET['q']) !== '') {
+    $searchValue = trim($_GET['q']);
+    $searchType = 'titre';
     $sql = "SELECT * FROM videos WHERE title LIKE :query";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute(['query' => '%' . $query . '%']);
+    $stmt = $conn->prepare($sql);
+    $stmt->execute(['query' => '%' . $searchValue . '%']);
     $results = $stmt->fetchAll();
+} elseif (isset($_GET['category']) && trim($_GET['category']) !== '') {
+    $searchValue = trim($_GET['category']);
+    $searchType = 'catégorie';
+    $sql = "SELECT * FROM videos WHERE category = :category";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute(['category' => $searchValue]);
+    $results = $stmt->fetchAll();
+} elseif (isset($_GET['director']) && trim($_GET['director']) !== '') {
+    $searchValue = trim($_GET['director']);
+    $searchType = 'réalisateur';
+
+    $sql = "SELECT videos.*, directors.name AS director_name
+            FROM videos
+            INNER JOIN directors ON videos.director_id = directors.id
+            WHERE directors.name LIKE :director";
+    
+
+    $stmt = $conn->prepare($sql);
+
+    $stmt->execute(['director' => '%' . $searchValue . '%']);
+    
+    $results = $stmt->fetchAll();
+} else {
+    echo "caca";
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -32,71 +49,83 @@ if (isset($_GET['q'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recherche</title>
     <link rel="stylesheet" href="style/main_style.css">
-    <link rel="stylesheet" href="style/header_style.css">
+    <link rel="stylesheet" href="style/header_style_2.css">
     <link rel="stylesheet" href="style/footer_style.css">
 </head>
 
 <body>
-    <header>
+<header>
         <div class="logo">The Sup Movie Base</div>
 
         <?php if (isset($_SESSION['username'])): ?>
         <div class="welcome-message">
-            <?= htmlspecialchars($_SESSION['username']); ?> ! Voici le résultat de votre recherche.
-        </div>
-        <?php else: ?>
-        <div class="welcome-message">
-            Voici le résultat de votre recherche.
+            Bienvenue, <?= htmlspecialchars($_SESSION['username']); ?> !
         </div>
         <?php endif; ?>
 
-
         <nav>
-            <a href="usergestion/subscribe.php">Subscribe</a>
-            <a href="usergestion/login.php">Login</a>
+            <a href="usergestion/subscribe.php">Subscribe</a> |
+            <a href="usergestion/login.php">Login</a> |
+
             <?php if (isset($_SESSION['user_id'])): ?>
             <a href="panier.php">Panier</a>
             <?php else: ?>
             <a href="usergestion/subscribe.php"
                 onclick="alert('Veuillez vous inscrire ou vous connecter pour accéder au panier.');">Panier</a>
             <?php endif; ?>
-            <a href="../index.php">Accueil</a>
-            <a href="usergestion/logout.php">Deconnexion</a>
+            | <a href="../index.php">Accueil</a> |
+            <a href="usergestion/logout.php">Déconnexion</a>
+
         </nav>
 
-        <div class="search-bar">
-            <form action="search.php" method="get">
-                <input type="text" name="q" placeholder="Rechercher un film..." required>
-                <button type="submit">🔍</button>
-            </form>
-        </div>
+        <section class="category-bar">
+            <div class="category-description">
+                <p>Découvrez nos films par catégorie !</p>
+            </div>
+            <div class="category-buttons">
+                <a href="search.php?category=drama" class="category-button">Drama</a>
+                <a href="search.php?category=action" class="category-button">Action</a>
+            </div>
+
+            <div class="search-bar">
+                <form action="search.php" method="get">
+                    <input type="text" name="q" placeholder="Rechercher un film..." required>
+                    <button type="submit">🔍</button>
+                </form>
+            </div>
+
+            <div class="search-bar">
+                <form action="search.php" method="get">
+                    <input type="text" name="director" placeholder="Rechercher par réalisateur..." required>
+                    <button type="submit">🎬</button>
+                </form>
+            </div>
+        </section>
     </header>
 
-
     <main>
-        <?php if (!empty($escapedQuery)): ?>
-        <h1>Résultats de la recherche pour : "<?= $escapedQuery ?>"</h1>
-
-        <?php if ($results && count($results) > 0): ?>
-        <div class="results-container">
-            <?php foreach ($results as $video): ?>
-                <a href="vid.php?id=<?= urlencode($video['id']) ?>" class="video-result">
-                <h2><?= htmlspecialchars($video['title']) ?></h2>
-                <p><?= htmlspecialchars($video['description']) ?></p>
-                <?php if (!empty($video['image_url'])): ?>
-                <img src="<?= htmlspecialchars($video['image_url']) ?>" alt="Affiche du film">
-                <?php else: ?>
-                <p>Aucune image disponible.</p>
-                <?php endif; ?>
-                <p>Prix : <?= htmlspecialchars($video['price']) ?> €</p>
-                </a>
-            <?php endforeach; ?>
-        </div>
+        <?php if ($searchValue !== '' && $searchType !== ''): ?>
+            <h1>Résultats de la recherche par <?= $searchType ?> : "<?= htmlspecialchars($searchValue) ?>"</h1>
         <?php else: ?>
-        <p>Aucun film trouvé pour "<?= $escapedQuery ?>".</p>
+            <p>Aucune recherche effectuée.</p>
         <?php endif; ?>
-        <?php else: ?>
-        <p>Aucune recherche effectuée.</p>
+
+        <?php if (!empty($results)): ?>
+            <div class="results-container">
+                <?php foreach ($results as $video): ?>
+                    <a href="vid.php?id=<?= urlencode($video['id']) ?>" class="video-result">
+                        <h2><?= htmlspecialchars($video['title']) ?></h2>
+                        <?php if (!empty($video['image_url'])): ?>
+                            <img src="<?= htmlspecialchars($video['image_url']) ?>" alt="Affiche du film">
+                        <?php else: ?>
+                            <p>Aucune image disponible.</p>
+                        <?php endif; ?>
+                        <p>Prix : <?= htmlspecialchars($video['price']) ?> €</p>
+                    </a>
+                <?php endforeach; ?>
+            </div>
+        <?php elseif ($searchValue !== ''): ?>
+            <p>Aucun film trouvé pour "<?= htmlspecialchars($searchValue) ?>"</p>
         <?php endif; ?>
     </main>
 
@@ -107,7 +136,6 @@ if (isset($_GET['q'])) {
             <p>Email : contact@exemple.com</p>
             <p>Adresse : 123 Rue Imaginaire, 75000 Paris, France</p>
         </div>
-
 
         <div class="footer-social">
             <h3>Suivez-nous</h3>
@@ -123,7 +151,5 @@ if (isset($_GET['q'])) {
             <p>&copy; 2025 The Sup Movie Base. Tous droits réservés.</p>
         </div>
     </footer>
-
 </body>
-
 </html>

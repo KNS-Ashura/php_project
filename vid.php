@@ -9,7 +9,6 @@ if (!isset($_GET['id'])) {
 
 $video_id = $_GET['id'];
 
-// Préparer la requête SQL pour récupérer les informations du film avec les jointures
 $stmt = $conn->prepare("
     SELECT v.*, 
            d.name AS director_name, 
@@ -39,21 +38,95 @@ if (!$video) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($video['title']) ?></title>
+    <link rel="stylesheet" href="style/header_style.css">
+    <link rel="stylesheet" href="style/footer_style.css">
+    <link rel="stylesheet" href="style/vid_style.css">
 </head>
 
 <body>
-    <h1><?= htmlspecialchars($video['title']) ?></h1>
-    <img src="<?= htmlspecialchars($video['image_url']) ?>" alt="Affiche du film" style="max-width: 300px;">
-    <p><strong>Description :</strong> <?= nl2br(htmlspecialchars($video['description'])) ?></p>
-    <p><strong>Prix :</strong> <?= htmlspecialchars($video['price']) ?> €</p>
-    <p><strong>Catégorie :</strong> <?= htmlspecialchars($video['category']) ?></p>
-    <p><strong>Réalisateur :</strong> <?= htmlspecialchars($video['director_name'] ?? 'Inconnu') ?></p>
-    <p><strong>Acteurs :</strong></p>
-    <ul>
-        <li><?= htmlspecialchars($video['actor1_name'] ?? 'Inconnu') ?></li>
-        <li><?= htmlspecialchars($video['actor2_name'] ?? 'Inconnu') ?></li>
-        <li><?= htmlspecialchars($video['actor3_name'] ?? 'Inconnu') ?></li>
-    </ul>
+
+    <header>
+        <div class="logo">The Sup Movie Base</div>
+
+        <?php if (isset($_SESSION['username'])): ?>
+        <div class="welcome-message">
+            Bienvenue, <?= htmlspecialchars($_SESSION['username']); ?> !
+        </div>
+        <?php endif; ?>
+
+        <nav>
+            <a href="usergestion/subscribe.php">Subscribe</a> |
+            <a href="usergestion/login.php">Login</a> |
+            <a href="../index.php">Accueil</a> |
+
+            <?php if (isset($_SESSION['user_id'])): ?>
+            <a href="panier.php">Panier</a>
+            <?php else: ?>
+            <a href="usergestion/subscribe.php"
+                onclick="alert('Veuillez vous inscrire ou vous connecter pour accéder au panier.');">Panier</a>
+            <?php endif; ?>
+
+            | <a href="usergestion/logout.php">Déconnexion</a>
+
+        </nav>
+
+        <div class="search-bar">
+            <form action="search.php" method="get">
+                <input type="text" name="q" placeholder="Rechercher un film..." required>
+                <button type="submit">🔍</button>
+            </form>
+        </div>
+    </header>
+
+    <main>
+        <h1><?= htmlspecialchars($video['title'])?></h1>
+        <img src="<?= htmlspecialchars($video['image_url']) ?>" alt="Affiche du film" style="max-width: 300px;">
+        <p><strong>Description :</strong> <?= nl2br(htmlspecialchars($video['description'])) ?></p>
+        <p><strong>Prix :</strong> <?= htmlspecialchars($video['price']) ?> €</p>
+        <p><strong>Catégorie :</strong> <?= htmlspecialchars($video['category']) ?></p>
+        <p><strong>Réalisateur :</strong> <?= htmlspecialchars($video['director_name'] ?? 'Inconnu') ?></p>
+        <p><strong>Acteurs :</strong></p>
+        <ul>
+            <li><?= htmlspecialchars($video['actor1_name'] ?? 'Inconnu') ?></li>
+            <li><?= htmlspecialchars($video['actor2_name'] ?? 'Inconnu') ?></li>
+            <li><?= htmlspecialchars($video['actor3_name'] ?? 'Inconnu') ?></li>
+        </ul>
+        <?php if (isset($_SESSION['user_id'])): ?>
+        <form action="ajouter_au_panier.php" method="post">
+            <input type="hidden" name="video_id" value="<?= $video_id ?>">
+            <button type="submit" class="add-to-cart-btn">Ajouter au panier</button>
+        </form>
+        <?php else: ?>
+        <button class="add-to-cart-btn"
+            onclick="alert('Vous devez être connecté pour ajouter un film au panier.'); window.location.href='usergestion/login.php';">
+            Ajouter au panier
+        </button>
+        <?php endif; ?>
+    </main>
+
+    <footer>
+        <div class="footer-contact">
+            <h3>Contact</h3>
+            <p>Téléphone : +33 1 23 45 67 89</p>
+            <p>Email : contact@exemple.com</p>
+            <p>Adresse : 123 Rue Imaginaire, 75000 Paris, France</p>
+        </div>
+
+        <div class="footer-social">
+            <h3>Suivez-nous</h3>
+            <p>
+                <a href="#">YouTube</a> |
+                <a href="#">Instagram</a> |
+                <a href="#">Facebook</a> |
+                <a href="#">Twitter</a>
+            </p>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 The Sup Movie Base. Tous droits réservés.</p>
+        </div>
+    </footer>
+
 </body>
 
 </html>
