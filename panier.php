@@ -32,6 +32,7 @@ $videos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="style/main_style.css">
     <link rel="stylesheet" href="style/header_style.css">
     <link rel="stylesheet" href="style/footer_style.css">
+    <link rel="stylesheet" href="style\btn_panier_style.css">
     <title>Panier</title>
 </head>
 
@@ -70,7 +71,6 @@ $videos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <?php $total += $video['price']; ?>
                 <a href="vid.php?id=<?= urlencode($video['id']) ?>" class="video-result">
                     <h2><?= htmlspecialchars($video['title']) ?></h2>
-                    <p><?= htmlspecialchars($video['description']) ?></p>
                     <?php if (!empty($video['image_url'])): ?>
                     <img src="<?= htmlspecialchars($video['image_url']) ?>" alt="Affiche du film">
                     <?php else: ?>
@@ -78,11 +78,11 @@ $videos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <?php endif; ?>
                     <p>Prix : <?= htmlspecialchars($video['price']) ?> €</p>
 
-                    <form action="retirer_du_panier.php" method="POST">
-                        <input type="hidden" name="video_id" value="<?= $video['id'] ?>">
-                        <button type="submit">Retirer du panier</button>
+                    <form action="ajouter_au_panier.php" method="post">
+                        <input type="hidden" name="video_id" value="<?= $video_id ?>">
+                        <button type="submit" class="add-to-cart-btn">Ajouter au panier</button>
                     </form>
-                    </a>
+                </a>
                 <?php endforeach; ?>
                 <div class="cart-total">
                     <h3>Total : <?= number_format($total, 2, ',', ' ') ?> €</h3>
