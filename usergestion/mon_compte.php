@@ -34,7 +34,7 @@ $purchased_videos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </head>
 
 <body>
-<header>
+    <header>
         <div class="logo">The Sup Movie Base</div>
 
         <?php if (isset($_SESSION['username'])): ?>
@@ -48,17 +48,10 @@ $purchased_videos = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <a href="usergestion/subscribe.php">Subscribe</a> |
             <a href="usergestion/login.php">Login</a>
             <?php else: ?>
-                <a href="../paniergestion/panier.php">Panier</a> |
+            <a href="../paniergestion/panier.php">Panier</a> |
             <a href="../index.php">Accueil</a>
             <?php endif; ?>
         </nav>
-
-        <div class="search-bar">
-            <form action="search.php" method="get">
-                <input type="text" name="q" placeholder="Rechercher un film..." required>
-                <button type="submit">🔍</button>
-            </form>
-        </div>
     </header>
 
     <main>
@@ -85,6 +78,30 @@ $purchased_videos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <?php endif; ?>
             </div>
         </section>
+
+        <section class="password-change">
+            <h2>Changer mon mot de passe</h2>
+
+            <?php if (!empty($error)): ?>
+            <p style="color: red;"><?= htmlspecialchars($error) ?></p>
+            <?php elseif (!empty($success)): ?>
+            <p style="color: green;"><?= htmlspecialchars($success) ?></p>
+            <?php endif; ?>
+
+            <form method="POST" action="">
+                <label for="old_password">Ancien mot de passe :</label>
+                <input type="password" name="old_password" id="old_password" required>
+
+                <label for="new_password">Nouveau mot de passe :</label>
+                <input type="password" name="new_password" id="new_password" required>
+
+                <label for="confirm_password">Confirmer le nouveau mot de passe :</label>
+                <input type="password" name="confirm_password" id="confirm_password" required>
+
+                <button type="submit">Mettre à jour le mot de passe</button>
+            </form>
+        </section>
+
     </main>
 
     <footer>

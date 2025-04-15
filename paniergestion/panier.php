@@ -94,6 +94,9 @@ $videos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <?php endif; ?>
             </div>
         </section>
+
+        <section>
+        </section>
     </main>
 
     <footer>

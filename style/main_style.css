@@ -94,4 +94,32 @@ a.video-result {
     color: #3a9704;
 }
 
+.password-change {
+    margin: 2rem auto;
+    max-width: 500px;
+    background-color: #f8f8f8;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #ccc;
+}
+.password-change form label,
+.password-change form input {
+    display: block;
+    width: 100%;
+    margin: 0.5rem 0;
+}
+.password-change form input {
+    padding: 0.5rem;
+}
+.password-change form button {
+    margin-top: 1rem;
+    padding: 0.7rem;
+    width: 100%;
+    background-color: #333;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+
 
