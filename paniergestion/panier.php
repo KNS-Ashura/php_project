@@ -47,17 +47,14 @@ $videos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <?php endif; ?>
 
         <nav>
-            <a href="usergestion/subscribe.php">Subscribe</a>|
-            <a href="usergestion/login.php">Login</a>|
+            <?php if (!isset($_SESSION['user_id'])): ?>
+            <a href="usergestion/subscribe.php">Subscribe</a> |
+            <a href="usergestion/login.php">Login</a>
+            <?php else: ?>
+            <a href="../usergestion/mon_compte.php">Gérer mon compte</a> |
             <a href="../index.php">Accueil</a>
+            <?php endif; ?>
         </nav>
-
-        <div class="search-bar">
-            <form action="search.php" method="get">
-                <input type="text" name="q" placeholder="Rechercher un film..." required>
-                <button type="submit">🔍</button>
-            </form>
-        </div>
     </header>
 
     <main>
@@ -84,9 +81,14 @@ $videos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </form>
                 </a>
                 <?php endforeach; ?>
-                <div class="cart-total">
-                    <h3>Total : <?= number_format($total, 2, ',', ' ') ?> €</h3>
-                </div>
+                <section class="panier_infos">
+                    <div class="cart-total">
+                        <h3>Total : <?= number_format($total, 2, ',', ' ') ?> €</h3>
+                    </div>
+                    <form action="acheter.php" method="POST">
+                        <button type="submit" class="acheter-btn">Acheter</button>
+                    </form>
+                </section>
                 <?php else: ?>
                 <p>Votre panier est vide.</p>
                 <?php endif; ?>

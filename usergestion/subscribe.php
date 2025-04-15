@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="logo">The Sup Movie Base</div>
 
         <nav>
-            <a href="login.php">Login</a>|
+            <a href="login.php">Créer un compte</a>|
             <a href="../index.php">Accueil</a>
         </nav>
     </header>

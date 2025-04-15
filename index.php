@@ -31,8 +31,8 @@ $recent_videos = $stmt->fetchAll();
         <?php endif; ?>
         <nav>
             <?php if (!isset($_SESSION['user_id'])): ?>
-            <a href="usergestion/subscribe.php">Subscribe</a> |
-            <a href="usergestion/login.php">Login</a>
+            <a href="usergestion/subscribe.php">Créer un compte</a> |
+            <a href="usergestion/login.php">Se connecter</a>
             <?php else: ?>
             <a href="paniergestion/panier.php">Panier</a> |
             <a href="usergestion/mon_compte.php">Gérer mon compte</a> |

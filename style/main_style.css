@@ -70,4 +70,28 @@ a.video-result {
     color: #2c3e50;
 }
 
+.acheter-btn {
+    background-color: #7b7b7b;
+    color: white;
+    padding: 12px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+.acheter-btn:hover {
+    background-color: #218838;
+}
+
+.panier_infos {
+    display: flex;
+    flex-direction: column;
+}
+
+.watch {
+    color: #3a9704;
+}
+
 
