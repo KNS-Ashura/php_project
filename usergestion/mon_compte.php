@@ -79,6 +79,14 @@ $purchased_videos = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </section>
 
+        <?php if (!empty($_SESSION['password_error'])): ?>
+        <p style="color: red; text-align:center;"><?= htmlspecialchars($_SESSION['password_error']) ?></p>
+        <?php unset($_SESSION['password_error']); ?>
+        <?php elseif (!empty($_SESSION['password_success'])): ?>
+        <p style="color: green; text-align:center;"><?= htmlspecialchars($_SESSION['password_success']) ?></p>
+        <?php unset($_SESSION['password_success']); ?>
+        <?php endif; ?>
+
         <section class="password-change">
             <h2>Changer mon mot de passe</h2>
 
@@ -88,7 +96,7 @@ $purchased_videos = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <p style="color: green;"><?= htmlspecialchars($success) ?></p>
             <?php endif; ?>
 
-            <form method="POST" action="">
+            <form method="POST" action="changepassword.php">
                 <label for="old_password">Ancien mot de passe :</label>
                 <input type="password" name="old_password" id="old_password" required>
 
