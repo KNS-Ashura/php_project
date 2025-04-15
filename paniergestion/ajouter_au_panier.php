@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'usergestion/db.php';
+require '../usergestion/db.php';
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: usergestion/login.php");

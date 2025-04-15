@@ -3,7 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once 'usergestion/db.php';
+require_once '../usergestion/db.php';
 
 if (!isset($_SESSION['user_id'])) {
     echo "<p>Vous devez être connecté pour voir votre panier.</p>";
@@ -29,10 +29,10 @@ $videos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style/main_style.css">
-    <link rel="stylesheet" href="style/header_style.css">
-    <link rel="stylesheet" href="style/footer_style.css">
-    <link rel="stylesheet" href="style\btn_panier_style.css">
+    <link rel="stylesheet" href="../style/main_style.css">
+    <link rel="stylesheet" href="../style/header_style.css">
+    <link rel="stylesheet" href="../style/footer_style.css">
+    <link rel="stylesheet" href="../style/btn_panier_style.css">
     <title>Panier</title>
 </head>
 
@@ -72,7 +72,7 @@ $videos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <a href="vid.php?id=<?= urlencode($video['id']) ?>" class="video-result">
                     <h2><?= htmlspecialchars($video['title']) ?></h2>
                     <?php if (!empty($video['image_url'])): ?>
-                    <img src="<?= htmlspecialchars($video['image_url']) ?>" alt="Affiche du film">
+                    <img src="../<?= htmlspecialchars($video['image_url']) ?>" alt="Affiche du film">
                     <?php else: ?>
                     <p>Aucune image disponible.</p>
                     <?php endif; ?>

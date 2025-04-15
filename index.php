@@ -43,7 +43,7 @@ $recent_videos = $stmt->fetchAll();
             <a href="usergestion/subscribe.php">Subscribe</a> |
             <a href="usergestion/login.php">Login</a>
             <?php else: ?>
-            <a href="panier.php">Panier</a> |
+            <a href="paniergestion/panier.php">Panier</a> |
             <a href="usergestion/mon_compte.php">Gérer mon compte</a> |
             <a href="usergestion/logout.php">Déconnexion</a>
             <?php endif; ?>

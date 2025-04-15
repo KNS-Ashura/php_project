@@ -59,7 +59,7 @@ if (!$video) {
             <a href="usergestion/subscribe.php">Subscribe</a> |
             <a href="usergestion/login.php">Login</a>
             <?php else: ?>
-            <a href="panier.php">Panier</a> |
+            <a href="paniergestion/panier.php">Panier</a> |
             <a href="usergestion/mon_compte.php">Gérer mon compte</a> |
             <a href="../index.php">Accueil</a> |
             <a href="usergestion/logout.php">Déconnexion</a>
@@ -91,7 +91,7 @@ if (!$video) {
             <li><?= htmlspecialchars($video['actor3_name'] ?? 'Inconnu') ?></li>
         </ul>
         <?php if (isset($_SESSION['user_id'])): ?>
-        <form action="ajouter_au_panier.php" method="post">
+        <form action="paniergestion/ajouter_au_panier.php" method="post">
             <input type="hidden" name="video_id" value="<?= $video_id ?>">
             <button type="submit" class="add-to-cart-btn">Ajouter au panier</button>
         </form>
