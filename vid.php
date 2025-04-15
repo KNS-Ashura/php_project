@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'usergestion/db.php';
+require 'database/db.php';
 
 if (!isset($_GET['id'])) {
     echo "Aucun film sélectionné.";

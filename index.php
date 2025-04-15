@@ -1,18 +1,9 @@
 <?php
 session_start();
-require './usergestion/env.php';
-
-$charset = 'latin1';
-
-try {
-    $dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
-    $pdo = new PDO($dsn, $user, $password);
-} catch (PDOException $e) {
-    die("Erreur de connexion à la base de données : " . $e->getMessage());
-}
+require 'database/db.php';
 
 $sql = "SELECT * FROM videos ORDER BY id DESC LIMIT 10";
-$stmt = $pdo->query($sql);
+$stmt = $conn->query($sql);
 $recent_videos = $stmt->fetchAll();
 ?>
 

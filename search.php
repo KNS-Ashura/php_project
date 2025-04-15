@@ -1,7 +1,6 @@
 <?php
 session_start();
-require './usergestion/env.php';
-require './usergestion/db.php';
+require 'database/db.php';
 
 $results = [];
 $searchType = '';

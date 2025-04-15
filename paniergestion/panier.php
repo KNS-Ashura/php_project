@@ -3,7 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once '../usergestion/db.php';
+require_once '../database/db.php';
 
 if (!isset($_SESSION['user_id'])) {
     echo "<p>Vous devez être connecté pour voir votre panier.</p>";
